@@ -6,19 +6,16 @@
         {
             Video video = new() { Title = "Video1"};
             var videoEncoder = new VideoEncoder(); // publisher
-            var mailService = new MailService();
+            var mailService = new MailService(); // subscriber
+            var msgService = new MessageService(); //subscriber
+
 
             videoEncoder.VideoEncodedEvent += mailService.OnVideoEncoded;
+            videoEncoder.VideoEncodedEvent += msgService.OnVideoEncoded;
 
             videoEncoder.Encode(video);
         }
     }
 
-    public class MailService
-    {
-        public void OnVideoEncoded(object source,  EventArgs args)
-        {
-            Console.WriteLine("MailService: sending one mail");
-        }
-    }
+    
 }
